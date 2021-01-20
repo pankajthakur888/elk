@@ -33,6 +33,6 @@
 	cd /opt/elk/
 	wget https://artifacts.elastic.co/downloads/logstash/logstash-7.10.2-linux-x86_64.tar.gz
 	tar -xzf logstash-7.10.2-linux-x86_64.tar.gz
-	cd logstash-7.10.2-linux-x86_64/
+	cd logstash-7.10.2
 	./bin/logstash -f logstash.conf
 	sudo ln -s "${PWD}/bin/logstash" /usr/local/bin/
