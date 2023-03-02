@@ -1,0 +1,31 @@
+rule_name: Check ssh login
+es_host: localhost
+es_port: 9200
+name: Check ssh login
+type: frequency
+index: logs-*
+num_events: 1
+timeframe:
+  hours: 1
+filter:
+  - query:
+      query_string:
+        query: "system.auth.ssh.event: Accepted"
+
+email_format: html
+
+alert_text_type: alert_text_jinja
+alert_text: |
+
+  <h4 style="background-color:rgb(240, 240, 240);font-family:courier;padding:1em;">
+  <p style="color:black;">Hello,</p>
+  <p style="color:black;">An accepted SSH login has been detected on HOST <span style="color:red;"> {{ host.hostname }} </span> from IP <span style="color:red;"> {{ source.ip }} </span> with USER <span style="color:red;"> {{ related.user }} </span> in the region <span style="color:red;">{{ source.geo.region_name }}</span>, with Internet Service Provider <span style="color:red;">{{ source.as.organization.name }}</span>.</p>
+  <p style="color:black;">Please review the events and take any necessary action.</p>
+  <br>
+  <p style="color:black;">Best regards,</p>
+  <p style="color:blue;">ElastAlert</p>
+  </h4>
+alert:
+- "email"
+email:
+- "pankaj@gmail.com"
